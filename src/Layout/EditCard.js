@@ -81,7 +81,7 @@ export default function EditCard() {
         className="btn btn-primary"
         style={{ margin: "0 10px" }}
       >
-        Submit
+        Save
       </button>
     </form>
   );

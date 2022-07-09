@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
-import { deleteDeck, readDeck } from "../utils/api";
+import { deleteCard, deleteDeck, readDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
 
@@ -20,18 +20,18 @@ export default function ViewDeck() {
       }
     }
     fetchDeck();
-    console.log(currentDeck)
     return () => abortController.abort()
-  }, [params.deckId, currentDeck]);
+  }, [params.deckId]);
 
-  const handleDeleteDeck = () => {
+  const handleDeleteDeck = (event) => {
+    event.preventDefault();
     const deleteBox = window.confirm(
       "Delete deck? \n \n You will not be able to recover it."
     );
 
     // if user hits "ok" on popup, code below deletes deck
     if (deleteBox) {
-      async function deleteDeckApiCall() {
+      async function deckDeleter() {
         try {
           await deleteDeck(params.deckId);
           history.push("/");
@@ -39,9 +39,21 @@ export default function ViewDeck() {
           console.error(error)
         }
       }
-      deleteDeckApiCall();
+      deckDeleter();
     }
   };
+
+  const handleDeleteCard = async (cardId) => {
+    const deleteBox = window.confirm(
+      "Delete this card? \n \n You will not be able to recover it."
+    );
+
+    // if user hits "ok" on popup, code below deletes card
+    if (deleteBox) {
+          await deleteCard(cardId);
+          history.push(`/`)
+      }
+    }
 
 
   const cardList = currentDeck.cards.map((card) => (
@@ -64,7 +76,7 @@ export default function ViewDeck() {
             >
               Edit
             </Link>
-            <button className="btn btn-danger">Delete</button>
+            <button className="btn btn-danger" onClick={() => handleDeleteCard(card.id)}>Delete</button>
           </div>
         </div>
       </li>
