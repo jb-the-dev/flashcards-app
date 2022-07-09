@@ -41,7 +41,7 @@ export default function CreateCard() {
     await createCard(deckId, {
       front: createCardData.front,
       back: createCardData.back,
-    });
+});
     console.log("card created.");
     setCreateCardData(blankCreateCard);
   };
@@ -59,8 +59,7 @@ export default function CreateCard() {
     <form onSubmit={handleCreateCard}>
       <div className="mb-3">
         <label htmlFor="front" className="form-label">
-          {" "}
-          Name{" "}
+          Name
         </label>
         <textarea
           id="front"
@@ -75,8 +74,7 @@ export default function CreateCard() {
       </div>
       <div className="mb-3">
         <label htmlFor="back" className="form-label">
-          {" "}
-          Description{" "}
+          Description
         </label>
         <textarea
           id="back"

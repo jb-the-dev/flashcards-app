@@ -78,7 +78,7 @@ export default function EditDeck() {
           required
         />
       </div>
-      <button onClick={handleEditCancel} className="btn btn-secondary">
+      <button onClick={handleEditCancel} type="button" className="btn btn-secondary">
         Cancel
       </button>
       <button
