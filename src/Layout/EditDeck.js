@@ -1,8 +1,96 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { readDeck, updateDeck } from "../utils/api";
+import Breadcrumb from "./Breadcrumb";
 
 export default function EditDeck() {
-    return <h1>Edit Deck</h1>
+  const [editDeckFormData, setEditDeckFormData] = useState({});
 
+  const { params } = useRouteMatch();
+  const history = useHistory();
 
+  // API call to fetch deck
+  useEffect(() => {
+    const abortController = new AbortController();
+    async function getDeck() {
+      try {
+        const fetchedDeck = await readDeck(params.deckId);
+        setEditDeckFormData(fetchedDeck);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getDeck();
+    return () => abortController.abort();
+  }, [params.deckId]);
+
+  // Handlers
+  const handleEditDeckSubmit = async (event) => {
+    event.preventDefault();
+    await updateDeck(editDeckFormData);
+    history.push(`/decks/${params.deckId}`);
+  };
+
+  //! This is tied to an uncontrolled component somehow - why though?
+  const handleEditDeckChange = (event) => {
+    event.preventDefault();
+    setEditDeckFormData({
+      ...editDeckFormData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  // HTML for rendering
+  const editDeckForm = (
+    <form onSubmit={handleEditDeckSubmit}>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Name
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          className="form-control"
+          value={editDeckFormData.name}
+          onChange={handleEditDeckChange}
+          placeholder="Enter the deck name here"
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="description" className="form-label">
+          Description
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          className="form-control"
+          value={editDeckFormData.description}
+          onChange={handleEditDeckChange}
+          placeholder="Enter the deck description here"
+          rows="4"
+          required
+        />
+      </div>
+      <Link to={`/decks/${params.deckId}}`} className="btn btn-secondary">
+        Cancel
+      </Link>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        style={{ margin: "0 10px" }}
+      >
+        Submit
+      </button>
+    </form>
+  );
+
+  return (
+    <React.Fragment>
+      <Breadcrumb />
+      <h1>Edit Deck</h1>
+      <div>{editDeckForm}</div>
+    </React.Fragment>
+  );
 }
