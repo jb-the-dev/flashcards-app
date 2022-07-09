@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function LoadDecks({decks, setDecks, cards, setCards}) {
-
-// API call to get decks
+export default function DeckList({ decks, setDecks, cards, setCards }) {
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -12,9 +10,8 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
         const response = await fetch("http://localhost:8080/decks", {
           signal: abortController.signal,
         });
-        const decksData = await response.json();
-        setDecks(decksData);
-        
+        const data = await response.json();
+        setDecks(data);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log(error.name);
@@ -31,7 +28,6 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
     };
   }, [setDecks]);
 
-// API call to get cards
   useEffect(() => {
     const abortController = new AbortController();
 
@@ -40,9 +36,8 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
         const response = await fetch("http://localhost:8080/cards", {
           signal: abortController.signal,
         });
-        const cardsData = await response.json();
-        setCards(cardsData);
-
+        const data = await response.json();
+        setCards(data);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log(error.name);
@@ -55,21 +50,22 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
     getCards();
 
     return () => {
-        abortController.abort();
+      abortController.abort();
     };
   }, [setCards]);
 
+// Homepage HTML
   const deckList = decks.map((deck) => (
-      <div key={deck.id} className="card w-50">
+    <div key={deck.id} className="card w-50">
       <div className="card-body">
         <div
           className="row"
           style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "0 10px",
-            }}
-            >
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0 10px",
+          }}
+        >
           <h5 className="card-title"> {deck.name} </h5>
           <p> {cards.filter((card) => card.deckId === deck.id).length} cards</p>
         </div>
@@ -77,11 +73,11 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
         <div
           className="row"
           style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "0 10px",
-            }}
-            >
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "0 10px",
+          }}
+        >
           <div className="row" style={{ display: "flex", margin: "0 5px" }}>
             <Link to={`/decks/${deck.id}`} className="btn btn-secondary">
               View
@@ -96,19 +92,24 @@ export default function LoadDecks({decks, setDecks, cards, setCards}) {
               className="btn btn-danger"
               onClick={() =>
                 window.confirm(
-                    "Delete this deck? \n \n You will not be able to recover it."
+                  "Delete this deck? \n \n You will not be able to recover it."
                 )
               }
-              >
+            >
               Delete
             </button>
           </div>
         </div>
       </div>
-
     </div>
-
   ));
 
-  return deckList
+  return (
+    <>
+      <Link to="/decks/new" type="button" className="btn btn-secondary">
+        Create Deck
+      </Link>
+      {deckList}
+    </>
+  )
 }
