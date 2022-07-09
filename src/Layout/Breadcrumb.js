@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Breadcrumb() {
+export default function Breadcrumb({deckId, middleText, finalText = ''}) {
   return (
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
@@ -9,11 +9,13 @@ export default function Breadcrumb() {
           <Link to="/">Home</Link>
         </li>
         <li className="breadcrumb-item">
-          Middle
+          <Link to={`/decks/${deckId}`}>{middleText}</Link>
         </li>
+        {finalText && (
         <li className="breadcrumb-item active" aria-current="page">
-          Optional final bit
+          {finalText}
         </li>
+        )}
       </ol>
     </nav>
   );

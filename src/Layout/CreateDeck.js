@@ -85,7 +85,7 @@ export default function CreateDeck() {
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb middleText={"Create Deck"}/>
       <h1>Create Deck </h1>
       {createDeckForm}
     </>

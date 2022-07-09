@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { deleteDeck, readDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
 
-export default function ViewDeck({ deck, setDeck }) {
+export default function ViewDeck() {
+  const [currentDeck, setCurrentDeck] = useState({ cards: []});
   const { url, params } = useRouteMatch();
   const history = useHistory();
 
@@ -13,14 +14,15 @@ export default function ViewDeck({ deck, setDeck }) {
     async function fetchDeck() {
       try {
         let fetchedDeck = await readDeck(params.deckId, abortController.signal);
-        setDeck(fetchedDeck);
+        setCurrentDeck(fetchedDeck);
       } catch (error) {
           console.error(error)
       }
     }
     fetchDeck();
+    console.log(currentDeck)
     return () => abortController.abort()
-  }, [params.deckId, setDeck]);
+  }, [params.deckId, currentDeck]);
 
   const handleDeleteDeck = () => {
     const deleteBox = window.confirm(
@@ -42,7 +44,7 @@ export default function ViewDeck({ deck, setDeck }) {
   };
 
 
-  const cardList = deck.cards.map((card) => (
+  const cardList = currentDeck.cards.map((card) => (
     <div key={card.id} className="card container">
       <li className="row">
         <div className="col-6">
@@ -72,8 +74,8 @@ export default function ViewDeck({ deck, setDeck }) {
   const selectedDeck = (
     <div className="container column">
       <div className="column">
-        <h3> {deck.name} </h3>
-        <p> {deck.description}</p>
+        <h3> {currentDeck.name} </h3>
+        <p> {currentDeck.description}</p>
       </div>
       <div
         className="row"
@@ -117,7 +119,7 @@ export default function ViewDeck({ deck, setDeck }) {
 
   return (
     <React.Fragment>
-      <Breadcrumb />
+      <Breadcrumb middleText={currentDeck.name} />
       {selectedDeck}
       <h2>Cards</h2>
       <ul>{cardList}</ul>

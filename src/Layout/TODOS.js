@@ -8,7 +8,7 @@ DONE - complete cancel behavior on Create Deck
 !TODO - fix submit button on Create Deck
 DONE - update components to use breadcrumb component
 TODO - build breadcrumb to be dynamic
-TODO - add "not enough cards" functionality
+DONE - add "not enough cards" functionality
 TODO - add delete card functionality
 TODO - 
 TODO - 

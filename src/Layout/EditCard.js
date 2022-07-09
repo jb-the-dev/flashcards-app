@@ -88,7 +88,7 @@ export default function EditCard() {
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb middleText={`Deck ${currentDeck.name}`} deckId={currentDeck.id} finalText={`Edit Card ${params.cardId}`} />
       <h3>{currentDeck.name}: Edit Card</h3>
       {createCardForm}
     </>

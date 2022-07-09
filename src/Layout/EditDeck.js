@@ -93,7 +93,7 @@ export default function EditDeck() {
 
   return (
     <React.Fragment>
-      <Breadcrumb />
+      <Breadcrumb middleText={editDeckFormData.name} deckId={params.deckId} finalText={"Edit Deck"}/>
       <h1>Edit Deck</h1>
       <div>{editDeckForm}</div>
     </React.Fragment>

@@ -85,7 +85,7 @@ export default function CreateCard() {
 
   return (
     <div>
-      <Breadcrumb />
+      <Breadcrumb middleText={currentDeck.name} deckId={currentDeck.id} finalText={"Add Card"} />
       <h1>{currentDeck.name}: Add Card</h1>
       {createCardForm}
     </div>

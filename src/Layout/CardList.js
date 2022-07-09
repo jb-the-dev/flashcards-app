@@ -88,8 +88,8 @@ export default function CardList() {
 
   return (
     <>
-      <Breadcrumb />
-      <h1>Study: {currentDeck.name}</h1>
+      <Breadcrumb deckId={deckId} middleText={currentDeck.name}/>
+      <h1>{currentDeck.name}: Study</h1>
       {currentDeck.cards.length > 2 && <>{studyCards}</>}
       {currentDeck.cards.length <= 2 && (
         <>
