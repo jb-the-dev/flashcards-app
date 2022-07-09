@@ -1,25 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { listDecks } from "../utils/api";
+import { deleteDeck, listDecks } from "../utils/api";
 
 export default function DeckList() {
 const [deckList, setDeckList] = useState([]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    async function getDeckList() {
-      try {
-        const fetchedDeckList = await listDecks(abortController.signal);
-        setDeckList(fetchedDeckList);
-      } catch (error) {
-          console.error(error);
-        }
-      }
-    getDeckList();
+async function getDeckList(abortController) {
+  try {
+    const fetchedDeckList = await listDecks(abortController.signal);
+    setDeckList(fetchedDeckList);
+  } catch (error) {
+      console.error(error);
+    }
+  }
+
+useEffect(() => {
+  const abortController = new AbortController();
+  getDeckList(abortController);
     return () => abortController.abort();
   }, []);
 
-
+const handleDeleteDeck = (deck) => {
+  const deleteBox = window.confirm("Delete deck? \n\n You will not be able to recover it.");
+  //if user hits "ok" on popup, code below deletes deck
+  if (deleteBox) {
+    console.log("deleting..")
+    async function deckDeleter(){
+      try {
+        await deleteDeck(deck.id);
+        const abortController = new AbortController();
+        await getDeckList(abortController)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    deckDeleter();
+  }
+}
 
 // Homepage HTML
   const decksHtml = deckList.map((deck) => (
@@ -57,11 +74,7 @@ const [deckList, setDeckList] = useState([]);
             <button
               type="delete"
               className="btn btn-danger"
-              onClick={() =>
-                window.confirm(
-                  "Delete this deck? \n \n You will not be able to recover it."
-                )
-              }
+              onClick={() => handleDeleteDeck(deck)}
             >
               Delete
             </button>
