@@ -86,7 +86,7 @@ const handleDeleteDeck = (deck) => {
 
   return (
     <>
-      <Link to="/decks/new" type="button" className="btn btn-secondary">
+      <Link to="/decks/new" className="btn btn-secondary" style={{margin: "5px"}}>
         Create Deck
       </Link>
       {decksHtml}

@@ -34,7 +34,6 @@ export default function CreateDeck() {
 
   const createDeckForm = (
     <>
-      <h1>Create Deck </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -87,6 +86,7 @@ export default function CreateDeck() {
   return (
     <>
       <Breadcrumb />
+      <h1>Create Deck </h1>
       {createDeckForm}
     </>
   );
