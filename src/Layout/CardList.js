@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { readDeck } from "../utils/api";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
 
 
@@ -19,11 +19,7 @@ export default function CardList() {
         let fetchedDeck = await readDeck(deckId, abortController.signal);
         setCurrentDeck(fetchedDeck);
       } catch (error) {
-        if (error.name === "AbortError") {
-          console.log(error.name);
-        } else {
-          throw error;
-        }
+        console.error(error)
       }
     }
     fetchDeck();
@@ -94,7 +90,16 @@ export default function CardList() {
     <>
       <Breadcrumb />
       <h1>Study: {currentDeck.name}</h1>
-      {studyCards}
+      {currentDeck.cards.length > 2 && <>{studyCards}</>}
+      {currentDeck.cards.length <= 2 && (
+        <>
+          <h2>Not enough cards.</h2>
+          <p> You need at least 3 cards to study. There are {currentDeck.cards.length} in this deck.</p>
+          <Link to={`/decks/${currentDeck.id}/cards/new`} className="btn btn-primary">
+            Add Cards
+          </Link>
+        </>
+      )}
     </>
   );
 }
