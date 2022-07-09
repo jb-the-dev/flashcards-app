@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { readCard, readDeck, updateCard } from "../utils/api";
+import Breadcrumb from "./Breadcrumb";
 
 export default function EditCard() {
   const [currentDeck, setCurrentDeck] = useState({});
   const [editCardData, setEditCardData] = useState({});
-  const { url, params } = useRouteMatch();
+  const { params } = useRouteMatch();
   const history = useHistory();
 
 // Fetch current deck and current card
@@ -25,22 +26,6 @@ export default function EditCard() {
     getDeck();
     return () => abortController.abort()
   }, [params.deckId, params.cardId]);
-
-  const breadcrumb = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item">
-          <Link to={`${url}`}> {currentDeck.name} </Link>
-        </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          Edit Deck
-        </li>
-      </ol>
-    </nav>
-  );
 
   const handleEditCard = async (event) => {
     event.preventDefault();
@@ -105,10 +90,10 @@ export default function EditCard() {
   );
 
   return (
-    <div>
-      {breadcrumb}
+    <>
+      <Breadcrumb />
       <h3>{currentDeck.name}: Edit Card</h3>
       {createCardForm}
-    </div>
+    </>
   )
 }
