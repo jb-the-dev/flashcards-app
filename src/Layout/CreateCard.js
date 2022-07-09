@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useRouteMatch } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { createCard, readDeck } from "../utils/api";
+import Breadcrumb from "./Breadcrumb";
 
 export default function CreateCard() {
   const blankCreateCard = {
@@ -9,7 +10,6 @@ export default function CreateCard() {
   };
   const [createCardData, setCreateCardData] = useState(blankCreateCard);
   const [currentDeck, setCurrentDeck] = useState({});
-  const { url } = useRouteMatch();
   const { deckId } = useParams();
 
   useEffect(() => {
@@ -20,29 +20,12 @@ export default function CreateCard() {
     getDeck();
   }, [deckId]);
 
-  const breadcrumb = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item">
-          <Link to={`${url}`}> {currentDeck.name} </Link>
-        </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          Edit Deck
-        </li>
-      </ol>
-    </nav>
-  );
-
   const handleCreateCard = async (event) => {
     event.preventDefault();
     await createCard(deckId, {
       front: createCardData.front,
       back: createCardData.back,
 });
-    console.log("card created.");
     setCreateCardData(blankCreateCard);
   };
 
@@ -102,7 +85,7 @@ export default function CreateCard() {
 
   return (
     <div>
-      {breadcrumb}
+      <Breadcrumb />
       <h1>{currentDeck.name}: Add Card</h1>
       {createCardForm}
     </div>

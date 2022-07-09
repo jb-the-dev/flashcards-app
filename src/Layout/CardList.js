@@ -30,6 +30,8 @@ export default function CardList() {
     return () => abortController.abort();
   }, [deckId, setCurrentDeck]);
 
+  // if currentDeck exists, set card variable to a card in currentDeck
+  // otherwise set card variable to an empty object
   const card = currentDeck.cards[cardIndex] || {};
 
   const handleNext = () => {

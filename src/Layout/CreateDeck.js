@@ -15,13 +15,16 @@ export default function CreateDeck() {
   // Handlers
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("deck created.");
-    const newDeck = await createDeck(createDeckFormData);
+    const newDeck = await createDeck({
+      name: createDeckFormData.name,
+      description: createDeckFormData.description
+    });
+    console.log("deck created.", newDeck);
     const newDeckId = newDeck.id
     history.push(`/decks/${newDeckId}`);
   };
 
-  const handleCreateDeckChange = (event) => {
+  const handleChange = (event) => {
     setCreateDeckFormData({
       ...createDeckFormData,
       [event.target.name]: event.target.value,
@@ -42,8 +45,8 @@ export default function CreateDeck() {
             name="name"
             type="text"
             className="form-control"
-            onChange={handleCreateDeckChange}
-            value={createDeckFormData.name}
+            onChange={handleChange}
+            // value={createDeckFormData.name}
             placeholder="Deck Name"
             required
           />
@@ -56,8 +59,8 @@ export default function CreateDeck() {
             id="description"
             name="description"
             className="form-control"
-            onChange={handleCreateDeckChange}
-            value={createDeckFormData.description}
+            onChange={handleChange}
+            // value={createDeckFormData.description}
             placeholder="Brief description of deck"
             rows="4"
             required
