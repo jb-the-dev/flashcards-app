@@ -30,7 +30,6 @@ export default function EditCard() {
   const handleEditCard = async (event) => {
     event.preventDefault();
     await updateCard(editCardData);
-    console.log("card edited.");
     history.push(`/decks/${params.deckId}`);
   };
 
@@ -46,8 +45,7 @@ export default function EditCard() {
     <form onSubmit={handleEditCard}>
       <div className="mb-3">
         <label htmlFor="front" className="form-label">
-          {" "}
-          Front{" "}
+          Front
         </label>
         <textarea
           id="front"
@@ -62,8 +60,7 @@ export default function EditCard() {
       </div>
       <div className="mb-3">
         <label htmlFor="back" className="form-label">
-          {" "}
-          Back{" "}
+          Back
         </label>
         <textarea
           id="back"
@@ -77,14 +74,14 @@ export default function EditCard() {
         />
       </div>
       <Link to={`/decks/${currentDeck.id}`} className="btn btn-secondary">
-        Done
+        Cancel
       </Link>
       <button
         type="submit"
         className="btn btn-primary"
         style={{ margin: "0 10px" }}
       >
-        Save
+        Submit
       </button>
     </form>
   );

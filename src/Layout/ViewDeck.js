@@ -31,9 +31,8 @@ export default function ViewDeck({ deck, setDeck }) {
     if (deleteBox) {
       async function deleteDeckApiCall() {
         try {
-          let newDeckList = await deleteDeck(params.deckId);
+          await deleteDeck(params.deckId);
           history.push("/");
-          console.log(newDeckList);
         } catch (error) {
           console.error(error)
         }

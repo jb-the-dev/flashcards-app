@@ -44,7 +44,6 @@ export default function CardList() {
 
       restart ? setCardIndex(0) : history.push("/");
     }
-
     setCardSide(!cardSide);
   };
 

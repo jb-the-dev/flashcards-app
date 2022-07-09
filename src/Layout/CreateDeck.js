@@ -13,6 +13,14 @@ export default function CreateDeck() {
   const history = useHistory();
 
   // Handlers
+  const handleChange = (event) => {
+    setCreateDeckFormData({
+      ...createDeckFormData,
+      [event.target.name]: event.target.value,
+    });
+    console.log(createDeckFormData)
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newDeck = await createDeck({
@@ -22,14 +30,6 @@ export default function CreateDeck() {
     console.log("deck created.", newDeck);
     const newDeckId = newDeck.id
     history.push(`/decks/${newDeckId}`);
-  };
-
-  const handleChange = (event) => {
-    setCreateDeckFormData({
-      ...createDeckFormData,
-      [event.target.name]: event.target.value,
-    });
-    console.log(createDeckFormData)
   };
 
   const createDeckForm = (
