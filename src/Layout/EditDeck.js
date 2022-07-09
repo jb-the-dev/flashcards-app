@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { readDeck, updateDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
@@ -40,6 +40,11 @@ export default function EditDeck() {
     });
   };
 
+  const handleEditCancel = (event) => {
+    event.preventDefault();
+    history.push(`/decks/${params.deckId}`)
+  }
+
   // HTML for rendering
   const editDeckForm = (
     <form onSubmit={handleEditDeckSubmit}>
@@ -73,9 +78,9 @@ export default function EditDeck() {
           required
         />
       </div>
-      <Link to={`/decks/${params.deckId}}`} className="btn btn-secondary">
+      <button onClick={handleEditCancel} className="btn btn-secondary">
         Cancel
-      </Link>
+      </button>
       <button
         type="submit"
         className="btn btn-primary"

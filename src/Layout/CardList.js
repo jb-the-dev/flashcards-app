@@ -6,11 +6,10 @@ import Breadcrumb from "./Breadcrumb";
 
 export default function CardList() {
   const [currentDeck, setCurrentDeck] = useState({ cards: [] });
-  const { deckId } = useParams();
   const [cardIndex, setCardIndex] = useState(0);
-
   const [cardSide, setCardSide] = useState(true);
-
+  
+  const { deckId } = useParams();
   const history = useHistory();
 
   useEffect(() => {
@@ -28,9 +27,7 @@ export default function CardList() {
       }
     }
     fetchDeck();
-    return () => {
-      abortController.abort();
-    };
+    return () => abortController.abort();
   }, [deckId, setCurrentDeck]);
 
   const card = currentDeck.cards[cardIndex] || {};

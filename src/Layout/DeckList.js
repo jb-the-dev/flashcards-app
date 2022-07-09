@@ -7,7 +7,6 @@ const [deckList, setDeckList] = useState([]);
 
   useEffect(() => {
     const abortController = new AbortController();
-
     async function getDeckList() {
       try {
         const fetchedDeckList = await listDecks(abortController.signal);
