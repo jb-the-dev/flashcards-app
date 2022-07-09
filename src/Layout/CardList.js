@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { readDeck } from "../utils/api";
 import { useHistory, useParams } from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
+
 
 export default function CardList() {
   const [currentDeck, setCurrentDeck] = useState({ cards: [] });
@@ -15,7 +17,7 @@ export default function CardList() {
     const abortController = new AbortController();
     async function fetchDeck() {
       try {
-        let fetchedDeck = await readDeck(deckId);
+        let fetchedDeck = await readDeck(deckId, abortController.signal);
         setCurrentDeck(fetchedDeck);
       } catch (error) {
         if (error.name === "AbortError") {
@@ -30,7 +32,6 @@ export default function CardList() {
       abortController.abort();
     };
   }, [deckId, setCurrentDeck]);
-  console.log("deck.cards", currentDeck.cards);
 
   const card = currentDeck.cards[cardIndex] || {};
 
@@ -48,7 +49,7 @@ export default function CardList() {
     setCardSide(!cardSide);
   };
 
-  const pageCard = (
+  const studyCards = (
     <div key={card.id} className="card w-50">
       <div className="card-body">
         <div
@@ -81,7 +82,7 @@ export default function CardList() {
               Flip
             </button>
             {!cardSide && (
-              <button onClick={handleNext} to="" class="btn btn-primary">
+              <button onClick={handleNext} to="" className="btn btn-primary">
                 Next
               </button>
             )}
@@ -91,5 +92,11 @@ export default function CardList() {
     </div>
   );
 
-  return pageCard;
+  return (
+    <>
+      <Breadcrumb />
+      <h1>Study: {currentDeck.name}</h1>
+      {studyCards}
+    </>
+  );
 }

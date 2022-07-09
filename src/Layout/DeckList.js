@@ -1,61 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { listDecks } from "../utils/api";
 
-export default function DeckList({ decks, setDecks, cards, setCards }) {
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    async function getDecks() {
-      try {
-        const response = await fetch("http://localhost:8080/decks", {
-          signal: abortController.signal,
-        });
-        const data = await response.json();
-        setDecks(data);
-      } catch (error) {
-        if (error.name === "AbortError") {
-          console.log(error.name);
-        } else {
-          throw error;
-        }
-      }
-    }
-
-    getDecks();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [setDecks]);
+export default function DeckList() {
+const [deckList, setDeckList] = useState([]);
 
   useEffect(() => {
     const abortController = new AbortController();
 
-    async function getCards() {
+    async function getDeckList() {
       try {
-        const response = await fetch("http://localhost:8080/cards", {
-          signal: abortController.signal,
-        });
-        const data = await response.json();
-        setCards(data);
+        const fetchedDeckList = await listDecks(abortController.signal);
+        setDeckList(fetchedDeckList);
       } catch (error) {
-        if (error.name === "AbortError") {
-          console.log(error.name);
-        } else {
-          throw error;
+          console.error(error);
         }
       }
-    }
+    getDeckList();
+    return () => abortController.abort();
+  }, []);
 
-    getCards();
 
-    return () => {
-      abortController.abort();
-    };
-  }, [setCards]);
 
 // Homepage HTML
-  const deckList = decks.map((deck) => (
+  const decksHtml = deckList.map((deck) => (
     <div key={deck.id} className="card w-50">
       <div className="card-body">
         <div
@@ -67,7 +35,7 @@ export default function DeckList({ decks, setDecks, cards, setCards }) {
           }}
         >
           <h5 className="card-title"> {deck.name} </h5>
-          <p> {cards.filter((card) => card.deckId === deck.id).length} cards</p>
+          <p> {deck.cards.length} cards</p>
         </div>
         <p className="card-text">{deck.description}</p>
         <div
@@ -109,7 +77,7 @@ export default function DeckList({ decks, setDecks, cards, setCards }) {
       <Link to="/decks/new" type="button" className="btn btn-secondary">
         Create Deck
       </Link>
-      {deckList}
+      {decksHtml}
     </>
   )
 }
