@@ -11,8 +11,6 @@ import CreateCard from "./CreateCard";
 import EditCard from "./EditCard";
 
 export default function Routing() {
-  const [decks, setDecks] = useState([]);
-  const [cards, setCards] = useState([]);
   const [deck, setDeck] = useState({ cards: [] });
 
   return (
