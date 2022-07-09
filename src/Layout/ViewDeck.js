@@ -12,21 +12,15 @@ export default function ViewDeck({ deck, setDeck }) {
     const abortController = new AbortController();
     async function fetchDeck() {
       try {
-        let fetchedDeck = await readDeck(params.deckId);
+        let fetchedDeck = await readDeck(params.deckId, abortController.signal);
         setDeck(fetchedDeck);
       } catch (error) {
-        if (error.name === "AbortError") {
-          console.log(error.name);
-        } else {
-          throw error;
-        }
+          console.error(error)
       }
     }
     fetchDeck();
-    return () => {
-      abortController.abort();
-    };
-  }, [params.deckId, setDeck]); // add setDeck to dependencies
+    return () => abortController.abort()
+  }, [params.deckId, setDeck]);
 
   const handleDeleteDeck = () => {
     const deleteBox = window.confirm(
@@ -35,21 +29,15 @@ export default function ViewDeck({ deck, setDeck }) {
 
     // if user hits "ok" on popup, code below deletes deck
     if (deleteBox) {
-      console.log("please Delete deck");
       async function deleteDeckApiCall() {
         try {
           let newDeckList = await deleteDeck(params.deckId);
           history.push("/");
           console.log(newDeckList);
         } catch (error) {
-          if (error.name === "AbortError") {
-            console.log(error.name);
-          } else {
-            throw error;
-          }
+          console.error(error)
         }
       }
-
       deleteDeckApiCall();
     }
   };

@@ -4,21 +4,21 @@ import { createDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
 export default function CreateDeck() {
-  const initialState = {
+  const initialForm = {
     name: "",
     description: "",
   }
-  const [createDeckFormData, setCreateDeckFormData] = useState({...initialState});
+  const [createDeckFormData, setCreateDeckFormData] = useState({...initialForm});
 
   const history = useHistory();
 
   // Handlers
-  const handleCreateDeckSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const newDeck = await createDeck(createDeckFormData);
-    const deckId = await newDeck.id
     console.log("deck created.");
-    history.push(`/decks/${deckId}`);
+    const newDeck = await createDeck(createDeckFormData);
+    const newDeckId = newDeck.id
+    history.push(`/decks/${newDeckId}`);
   };
 
   const handleCreateDeckChange = (event) => {
@@ -32,7 +32,7 @@ export default function CreateDeck() {
   const createDeckForm = (
     <>
       <h1>Create Deck </h1>
-      <form onSubmit={handleCreateDeckSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name

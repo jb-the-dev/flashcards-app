@@ -21,15 +21,9 @@ export default function Routing() {
       <div className="container">
         <Switch>
           <Route exact path="/">
-            <DeckList
-              decks={decks}
-              cards={cards}
-              setDecks={setDecks}
-              setCards={setCards}
-            />
+            <DeckList />
           </Route>
-
-          <Route path="/decks/new">
+          <Route exact path="/decks/new">
             <CreateDeck />
           </Route>
           <Route exact path="/decks/:deckId">
@@ -38,7 +32,7 @@ export default function Routing() {
           <Route exact path="/decks/:deckId/edit">
             <EditDeck />
           </Route>
-          <Route path="/decks/:deckId/study">
+          <Route exact path="/decks/:deckId/study">
             <CardList />
           </Route>
           <Route exact path="/decks/:deckId/cards/:cardId/edit">
