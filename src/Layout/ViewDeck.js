@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { deleteDeck, readDeck } from "../utils/api";
+import Breadcrumb from "./Breadcrumb";
+
 
 export default function ViewDeck({ deck, setDeck }) {
-  const { url, params, path } = useRouteMatch();
+  const { url, params } = useRouteMatch();
   const history = useHistory();
 
   useEffect(() => {
@@ -30,8 +32,10 @@ export default function ViewDeck({ deck, setDeck }) {
     const deleteBox = window.confirm(
       "Delete deck? \n \n You will not be able to recover it."
     );
+
+    // if user hits "ok" on popup, code below deletes deck
     if (deleteBox) {
-      //  console.log("please Delete deck")
+      console.log("please Delete deck");
       async function deleteDeckApiCall() {
         try {
           let newDeckList = await deleteDeck(params.deckId);
@@ -50,7 +54,6 @@ export default function ViewDeck({ deck, setDeck }) {
     }
   };
 
-  console.log("path?", path, "url?", url);
 
   const cardList = deck.cards.map((card) => (
     <div key={card.id} className="card container">
@@ -83,7 +86,7 @@ export default function ViewDeck({ deck, setDeck }) {
     <div className="container column">
       <div className="column">
         <h3> {deck.name} </h3>
-        <p> {deck.description} </p>
+        <p> {deck.description}</p>
       </div>
       <div
         className="row"
@@ -125,36 +128,12 @@ export default function ViewDeck({ deck, setDeck }) {
     </div>
   );
 
-  const breadcrumb = (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          {deck.name}
-        </li>
-      </ol>
-    </nav>
-  );
-
   return (
     <React.Fragment>
-      {breadcrumb}
+      <Breadcrumb />
       {selectedDeck}
       <h2>Cards</h2>
       <ul>{cardList}</ul>
-      {/* <Switch>
-        <Route exact path={`${path}/edit`}>
-          <EditDeck />
-        </Route>
-        <Route exact path={`${path}/cards/new`}>
-          <CreateCard />
-        </Route>
-        <Route exact path={`${path}/cards/:cardId/edit`}>
-          <EditCard />
-        </Route>
-      </Switch> */}
     </React.Fragment>
   );
 }
