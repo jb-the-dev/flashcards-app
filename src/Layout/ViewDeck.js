@@ -32,7 +32,8 @@ export default function ViewDeck() {
       "Delete deck? \n \n You will not be able to recover it."
     );
 
-    if (deleteBox) { // if user hits "ok" on popup, code below deletes deck
+    if (deleteBox) {
+      // if user hits "ok" on popup, code below deletes deck
       async function deckDeleter() {
         try {
           await deleteDeck(params.deckId);
@@ -50,13 +51,14 @@ export default function ViewDeck() {
       "Delete this card? \n \n You will not be able to recover it."
     );
 
-    if (deleteBox) { // if user hits "ok" on popup, code below deletes card
+    if (deleteBox) {
+      // if user hits "ok" on popup, code below deletes card
       await deleteCard(cardId);
       history.push(`/`);
     }
   };
 
-  // HTML for rendering list of cards
+  // HTML for rendering list of cards, both sides at once
   const cardList = currentDeck.cards.map((card) => (
     <div key={card.id} className="card container">
       <li className="row">
@@ -89,7 +91,7 @@ export default function ViewDeck() {
     </div>
   ));
 
-// HTML for rendering deck info
+  // HTML for rendering deck info
   const selectedDeck = (
     <div className="container column">
       <div className="column">

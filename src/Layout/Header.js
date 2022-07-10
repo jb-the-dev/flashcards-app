@@ -1,5 +1,7 @@
 import React from "react";
 
+// Component that displays a jumbotron across all pages of the app
+
 function Header() {
   return (
     <header className="jumbotron bg-dark">

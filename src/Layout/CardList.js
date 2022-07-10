@@ -3,6 +3,8 @@ import { readDeck } from "../utils/api";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
 
+// Component that dynamically displays a deck's study cards one by one, allowing user to flip and study them
+
 export default function CardList() {
   const [currentDeck, setCurrentDeck] = useState({ cards: [] });
   const [cardIndex, setCardIndex] = useState(0);
@@ -11,6 +13,7 @@ export default function CardList() {
   const { deckId } = useParams();
   const history = useHistory();
 
+  // API call to fetch current deck
   useEffect(() => {
     const abortController = new AbortController();
     async function fetchDeck() {
@@ -25,10 +28,7 @@ export default function CardList() {
     return () => abortController.abort();
   }, [deckId, setCurrentDeck]);
 
-  // if currentDeck exists, set card variable to a card in currentDeck
-  // otherwise set card variable to an empty object
-  const card = currentDeck.cards[cardIndex] || {};
-
+  // Handler that causes the front of the next card to render; if at the last card, handler triggers restart prompt
   const handleNext = () => {
     if (cardIndex < currentDeck.cards.length - 1) {
       setCardIndex(cardIndex + 1);
@@ -42,7 +42,12 @@ export default function CardList() {
     setCardSide(!cardSide);
   };
 
-  const studyCards = (
+  // if currentDeck exists, set card variable to a card in currentDeck
+  // otherwise set card variable to an empty object so page still renders
+  const card = currentDeck.cards[cardIndex] || {};
+
+  // HTML with dynamic rendering to flip card
+  const dynamicStudyCard = (
     <div key={card.id} className="card w-50">
       <div className="card-body">
         <div
@@ -54,8 +59,7 @@ export default function CardList() {
           }}
         >
           <p>
-            {" "}
-            Card {cardIndex + 1} of {currentDeck.cards.length}{" "}
+            Card {cardIndex + 1} of {currentDeck.cards.length}
           </p>
         </div>
         <p className="card-text">{cardSide ? card.front : card.back}</p>
@@ -74,6 +78,7 @@ export default function CardList() {
             >
               Flip
             </button>
+            {/* Show Next button only on backside of card */}
             {!cardSide && (
               <button onClick={handleNext} to="" className="btn btn-primary">
                 Next
@@ -93,7 +98,9 @@ export default function CardList() {
         finalText={"Study"}
       />
       <h1>{currentDeck.name}: Study</h1>
-      {currentDeck.cards.length > 2 && <>{studyCards}</>}
+      {currentDeck.cards.length > 2 && <>{dynamicStudyCard}</>}
+
+      {/* If there's not enough cards, below HTML renders instead with link to add more cards */}
       {currentDeck.cards.length <= 2 && (
         <>
           <h2>Not enough cards.</h2>

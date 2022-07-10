@@ -4,6 +4,8 @@ import { createDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 import DeckForm from "./DeckForm";
 
+// Component with the state, handlers, and form component for creating the name and description of a deck
+
 export default function CreateDeck() {
   const initialForm = {
     name: "",
@@ -15,7 +17,7 @@ export default function CreateDeck() {
 
   const history = useHistory();
 
-  // Handlers
+  // Handlers for submitting, editing, and cancelling on the deck form
   const handleCreateDeckChange = (event) => {
     setCreateDeckFormData({
       ...createDeckFormData,
@@ -32,7 +34,7 @@ export default function CreateDeck() {
 
   const handleCreateDeckCancel = (event) => {
     event.preventDefault();
-    history.push('/');
+    history.push("/");
   };
 
   return (
@@ -40,7 +42,7 @@ export default function CreateDeck() {
       <Breadcrumb middleText={"Create Deck"} />
       <h1>Create Deck </h1>
       <DeckForm
-      handleCancel={handleCreateDeckCancel}
+        handleCancel={handleCreateDeckCancel}
         handleChange={handleCreateDeckChange}
         handleSubmit={handleCreateDeckSubmit}
         deckData={createDeckFormData}

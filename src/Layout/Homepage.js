@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteDeck, listDecks } from "../utils/api";
 
-export default function DeckList() {
+// Component that appears on the homepage, showing the list of study decks along with buttons to View, Study, Add, or Delete them.
+
+export default function Homepage() {
 const [deckList, setDeckList] = useState([]);
 
+// API call to fetch the list of decks
 async function getDeckList(abortController) {
   try {
     const fetchedDeckList = await listDecks(abortController.signal);
@@ -20,10 +23,11 @@ useEffect(() => {
     return () => abortController.abort();
   }, []);
 
+// Handler for deleting a deck
 const handleDeleteDeck = (deck) => {
   const deleteBox = window.confirm("Delete deck? \n\n You will not be able to recover it.");
-  //if user hits "ok" on popup, code below deletes deck
-  if (deleteBox) {
+
+  if (deleteBox) {   //if user hits "ok" on popup, code below deletes deck & re-renders the updated list of decks
     async function deckDeleter(){
       try {
         await deleteDeck(deck.id);

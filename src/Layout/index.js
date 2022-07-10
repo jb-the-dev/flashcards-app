@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Header from "./Header";
 import NotFound from "./NotFound";
-import DeckList from "./DeckList";
+import Homepage from "./Homepage";
 import CreateDeck from "./CreateDeck";
 import ViewDeck from "./ViewDeck";
 import EditDeck from "./EditDeck";
@@ -21,7 +21,7 @@ export default function Routing() {
       <div className="container">
         <Switch>
           <Route exact path="/">
-            <DeckList />
+            <Homepage />
           </Route>
           <Route exact path="/decks/new">
             <CreateDeck />

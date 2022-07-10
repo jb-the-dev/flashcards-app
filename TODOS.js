@@ -14,7 +14,7 @@ DONE - build breadcrumb to be dynamic
 DONE - add "not enough cards" functionality
 DONE - add delete card functionality
 DONE - clean out console.logs
-TODO - add comments to code
-TODO - create card form component
-TODO - create deck form component
+*WIP - add comments to code
+DONE - create card form component
+DONE - create deck form component
 */

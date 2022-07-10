@@ -4,7 +4,7 @@ import { readDeck, updateDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 import DeckForm from "./DeckForm";
 
-// Component for editing the name and description of a study deck
+// Component with the state, handlers, and form component for editing the front and back of a deck
 
 export default function EditDeck() {
   const [editDeckFormData, setEditDeckFormData] = useState({
@@ -30,7 +30,7 @@ export default function EditDeck() {
     return () => abortController.abort();
   }, [params.deckId]);
 
-  // Handlers
+  // Handlers for submitting, editing, and cancelling on the deck form
   const handleEditDeckSubmit = async (event) => {
     event.preventDefault();
     await updateDeck(editDeckFormData);

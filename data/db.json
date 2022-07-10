@@ -43,12 +43,6 @@
       "id": 7
     },
     {
-      "front": "asdfsadfsa",
-      "back": "asdfsdf",
-      "deckId": 1,
-      "id": 8
-    },
-    {
       "front": "asdfasdfa",
       "back": "asdfasdf",
       "deckId": 1,
@@ -65,6 +59,18 @@
       "back": "tomayto tomahto",
       "deckId": 4,
       "id": 12
+    },
+    {
+      "front": "yes",
+      "back": "nah",
+      "deckId": 4,
+      "id": 13
+    },
+    {
+      "front": "how bout nao",
+      "back": "yes",
+      "deckId": 4,
+      "id": 14
     }
   ]
 }
