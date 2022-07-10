@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// breadcrumb component that renders text and links dynamically depending on its parent component's needs
+
 export default function Breadcrumb({ deckId, middleText, finalText = "" }) {
   return (
     <nav aria-label="breadcrumb">

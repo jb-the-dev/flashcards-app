@@ -10,6 +10,8 @@ import CardList from "./CardList";
 import CreateCard from "./CreateCard";
 import EditCard from "./EditCard";
 
+// Complete routing setup for app
+
 export default function Routing() {
   const [deck, setDeck] = useState({ cards: [] });
 

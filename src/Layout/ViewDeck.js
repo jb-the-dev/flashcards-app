@@ -3,11 +3,14 @@ import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { deleteCard, deleteDeck, readDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
+// Component for viewing a deck's entire list of cards, along with buttons for editing both the deck and individual cards
+
 export default function ViewDeck() {
   const [currentDeck, setCurrentDeck] = useState({ cards: [] });
   const { url, params } = useRouteMatch();
   const history = useHistory();
 
+  // API call to get current deck
   useEffect(() => {
     const abortController = new AbortController();
     async function fetchDeck() {
@@ -22,14 +25,14 @@ export default function ViewDeck() {
     return () => abortController.abort();
   }, [params.deckId]);
 
+  // Handlers
   const handleDeleteDeck = (event) => {
     event.preventDefault();
     const deleteBox = window.confirm(
       "Delete deck? \n \n You will not be able to recover it."
     );
 
-    // if user hits "ok" on popup, code below deletes deck
-    if (deleteBox) {
+    if (deleteBox) { // if user hits "ok" on popup, code below deletes deck
       async function deckDeleter() {
         try {
           await deleteDeck(params.deckId);
@@ -47,13 +50,13 @@ export default function ViewDeck() {
       "Delete this card? \n \n You will not be able to recover it."
     );
 
-    // if user hits "ok" on popup, code below deletes card
-    if (deleteBox) {
+    if (deleteBox) { // if user hits "ok" on popup, code below deletes card
       await deleteCard(cardId);
       history.push(`/`);
     }
   };
 
+  // HTML for rendering list of cards
   const cardList = currentDeck.cards.map((card) => (
     <div key={card.id} className="card container">
       <li className="row">
@@ -86,6 +89,7 @@ export default function ViewDeck() {
     </div>
   ));
 
+// HTML for rendering deck info
   const selectedDeck = (
     <div className="container column">
       <div className="column">

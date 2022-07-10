@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { readDeck, updateDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
+import DeckForm from "./DeckForm";
+
+// Component for editing the name and description of a study deck
 
 export default function EditDeck() {
-  const [editDeckFormData, setEditDeckFormData] = useState({name: "", description: ""});
+  const [editDeckFormData, setEditDeckFormData] = useState({
+    name: "",
+    description: "",
+  });
 
   const { params } = useRouteMatch();
   const history = useHistory();
@@ -31,71 +37,33 @@ export default function EditDeck() {
     history.push(`/decks/${params.deckId}`);
   };
 
-  //! This is tied to an uncontrolled component somehow - why though?
   const handleEditDeckChange = (event) => {
     event.preventDefault();
     setEditDeckFormData({
       ...editDeckFormData,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
-  const handleEditCancel = (event) => {
+  const handleEditDeckCancel = (event) => {
     event.preventDefault();
-    history.push(`/decks/${params.deckId}`)
-  }
-
-  // HTML for rendering
-  const editDeckForm = (
-    <form onSubmit={handleEditDeckSubmit}>
-      <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Name
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          className="form-control"
-          value={editDeckFormData.name}
-          onChange={handleEditDeckChange}
-          placeholder="Enter the deck name here"
-          required
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          Description
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          className="form-control"
-          value={editDeckFormData.description}
-          onChange={handleEditDeckChange}
-          placeholder="Enter the deck description here"
-          rows="4"
-          required
-        />
-      </div>
-      <button onClick={handleEditCancel} className="btn btn-secondary">
-        Cancel
-      </button>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        style={{ margin: "0 10px" }}
-      >
-        Submit
-      </button>
-    </form>
-  );
+    history.push(`/decks/${params.deckId}`);
+  };
 
   return (
     <>
-      <Breadcrumb middleText={editDeckFormData.name} deckId={params.deckId} finalText={"Edit Deck"}/>
+      <Breadcrumb
+        middleText={editDeckFormData.name}
+        deckId={params.deckId}
+        finalText={"Edit Deck"}
+      />
       <h1>Edit Deck</h1>
-      {editDeckForm}
+      <DeckForm
+        handleCancel={handleEditDeckCancel}
+        handleChange={handleEditDeckChange}
+        handleSubmit={handleEditDeckSubmit}
+        deckData={editDeckFormData}
+      />
     </>
   );
 }
