@@ -2,13 +2,18 @@
   "decks": [
     {
       "id": 1,
-      "name": "Rendering in React",
-      "description": "React's component structure allows for quickly building a complex web application that relies on DOM manipulation. "
+      "name": "Rendering in Recat",
+      "description": "Recat's component structure allows for quickly building a complex web application that relies on DOM manipulation. "
     },
     {
       "name": "React Router",
       "description": "React Router is a collection of navigational components that compose declaratively with your application.",
       "id": 2
+    },
+    {
+      "name": "sdf",
+      "description": "fff",
+      "id": 3
     }
   ],
   "cards": [
@@ -36,6 +41,24 @@
       "back": "b",
       "deckId": 1,
       "id": 7
+    },
+    {
+      "front": "asdfsadfsa",
+      "back": "asdfsdf",
+      "deckId": 1,
+      "id": 8
+    },
+    {
+      "front": "asdfasdfa",
+      "back": "asdfasdf",
+      "deckId": 1,
+      "id": 9
+    },
+    {
+      "front": "aadsfa",
+      "back": "sdfasdf",
+      "deckId": 2,
+      "id": 10
     }
   ]
 }

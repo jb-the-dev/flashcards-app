@@ -23,10 +23,7 @@ export default function CreateDeck() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newDeck = await createDeck({
-      name: createDeckFormData.name,
-      description: createDeckFormData.description
-    });
+    const newDeck = await createDeck(createDeckFormData);
     console.log("deck created.", newDeck);
     const newDeckId = newDeck.id
     history.push(`/decks/${newDeckId}`);
@@ -73,7 +70,7 @@ export default function CreateDeck() {
           Cancel
         </button>
         <button
-          type="button"
+          type="submit"
           className="btn btn-primary"
           style={{ margin: "0 10px" }}
         >
