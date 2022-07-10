@@ -11,9 +11,9 @@
       "id": 2
     },
     {
-      "name": "Arugula",
-      "description": "ffffff",
-      "id": 3
+      "name": "tarzan",
+      "description": "MY TARZAN",
+      "id": 4
     }
   ],
   "cards": [
@@ -55,10 +55,16 @@
       "id": 9
     },
     {
-      "front": "aadsfa",
-      "back": "sdfasdf",
+      "front": "bbc",
+      "back": "radio one",
       "deckId": 2,
-      "id": 10
+      "id": 11
+    },
+    {
+      "front": "potayto potahto",
+      "back": "tomayto tomahto",
+      "deckId": 4,
+      "id": 12
     }
   ]
 }

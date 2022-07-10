@@ -71,14 +71,14 @@ export default function CreateCard() {
         />
       </div>
       <Link to={`/decks/${currentDeck.id}`} className="btn btn-secondary">
-        Cancel
+        Done
       </Link>
       <button
         type="submit"
         className="btn btn-primary"
         style={{ margin: "0 10px" }}
       >
-        Submit
+        Save
       </button>
     </form>
   );
