@@ -3,12 +3,11 @@ import { readDeck } from "../utils/api";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "./Breadcrumb";
 
-
 export default function CardList() {
   const [currentDeck, setCurrentDeck] = useState({ cards: [] });
   const [cardIndex, setCardIndex] = useState(0);
   const [cardSide, setCardSide] = useState(true);
-  
+
   const { deckId } = useParams();
   const history = useHistory();
 
@@ -19,7 +18,7 @@ export default function CardList() {
         let fetchedDeck = await readDeck(deckId, abortController.signal);
         setCurrentDeck(fetchedDeck);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     }
     fetchDeck();
@@ -88,14 +87,25 @@ export default function CardList() {
 
   return (
     <>
-      <Breadcrumb deckId={deckId} middleText={currentDeck.name}/>
+      <Breadcrumb
+        deckId={deckId}
+        middleText={currentDeck.name}
+        finalText={"Study"}
+      />
       <h1>{currentDeck.name}: Study</h1>
       {currentDeck.cards.length > 2 && <>{studyCards}</>}
       {currentDeck.cards.length <= 2 && (
         <>
           <h2>Not enough cards.</h2>
-          <p> You need at least 3 cards to study. There are {currentDeck.cards.length} cards in this deck.</p>
-          <Link to={`/decks/${currentDeck.id}/cards/new`} className="btn btn-primary">
+          <p>
+            {" "}
+            You need at least 3 cards to study. There are{" "}
+            {currentDeck.cards.length} cards in this deck.
+          </p>
+          <Link
+            to={`/decks/${currentDeck.id}/cards/new`}
+            className="btn btn-primary"
+          >
             Add Cards
           </Link>
         </>

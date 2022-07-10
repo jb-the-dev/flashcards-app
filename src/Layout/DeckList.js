@@ -24,7 +24,6 @@ const handleDeleteDeck = (deck) => {
   const deleteBox = window.confirm("Delete deck? \n\n You will not be able to recover it.");
   //if user hits "ok" on popup, code below deletes deck
   if (deleteBox) {
-    console.log("deleting..")
     async function deckDeleter(){
       try {
         await deleteDeck(deck.id);

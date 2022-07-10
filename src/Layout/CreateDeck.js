@@ -18,13 +18,11 @@ export default function CreateDeck() {
       ...createDeckFormData,
       [event.target.name]: event.target.value,
     });
-    console.log(createDeckFormData)
   };
   
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newDeck = await createDeck(createDeckFormData);
-    console.log("deck created.", newDeck);
     const newDeckId = newDeck.id
     history.push(`/decks/${newDeckId}`);
   };

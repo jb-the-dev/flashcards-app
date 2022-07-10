@@ -7,13 +7,13 @@ DONE - complete cancel behavior on Create Deck
 DONE - fix uncontrolled input issue on Edit Deck
 DONE - fix submit button on Create Deck
 DONE - update components to use breadcrumb component
-*WIP - build breadcrumb to be dynamic
-    * no link on Create Deck
-    * no link on View Deck
-    * add "study" to final text
+DONE - build breadcrumb to be dynamic
+    no link on Create Deck
+    no link on View Deck
+    add "study" to final text
 DONE - add "not enough cards" functionality
 DONE - add delete card functionality
-TODO - clean out console.logs
+DONE - clean out console.logs
 TODO - add comments to code
 TODO - create card form component
 TODO - create deck form component

@@ -3,9 +3,8 @@ import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import { deleteCard, deleteDeck, readDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
-
 export default function ViewDeck() {
-  const [currentDeck, setCurrentDeck] = useState({ cards: []});
+  const [currentDeck, setCurrentDeck] = useState({ cards: [] });
   const { url, params } = useRouteMatch();
   const history = useHistory();
 
@@ -16,11 +15,11 @@ export default function ViewDeck() {
         let fetchedDeck = await readDeck(params.deckId, abortController.signal);
         setCurrentDeck(fetchedDeck);
       } catch (error) {
-          console.error(error)
+        console.error(error);
       }
     }
     fetchDeck();
-    return () => abortController.abort()
+    return () => abortController.abort();
   }, [params.deckId]);
 
   const handleDeleteDeck = (event) => {
@@ -36,7 +35,7 @@ export default function ViewDeck() {
           await deleteDeck(params.deckId);
           history.push("/");
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       }
       deckDeleter();
@@ -50,11 +49,10 @@ export default function ViewDeck() {
 
     // if user hits "ok" on popup, code below deletes card
     if (deleteBox) {
-          await deleteCard(cardId);
-          history.push(`/`)
-      }
+      await deleteCard(cardId);
+      history.push(`/`);
     }
-
+  };
 
   const cardList = currentDeck.cards.map((card) => (
     <div key={card.id} className="card container">
@@ -76,7 +74,12 @@ export default function ViewDeck() {
             >
               Edit
             </Link>
-            <button className="btn btn-danger" onClick={() => handleDeleteCard(card.id)}>Delete</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDeleteCard(card.id)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </li>
@@ -130,11 +133,11 @@ export default function ViewDeck() {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Breadcrumb middleText={currentDeck.name} />
       {selectedDeck}
       <h2>Cards</h2>
       <ul>{cardList}</ul>
-    </React.Fragment>
+    </>
   );
 }
