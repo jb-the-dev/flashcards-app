@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { readCard, readDeck, updateCard } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
@@ -9,11 +9,11 @@ export default function EditCard() {
   const { params } = useRouteMatch();
   const history = useHistory();
 
-// Fetch current deck and current card
+// API calls to fetch current deck, then fetch current card
   useEffect(() => {
     const abortController = new AbortController();
     async function getDeck() {
-      try{
+      try {
       const fetchedDeck = await readDeck(params.deckId);
       setCurrentDeck(fetchedDeck);
 
@@ -24,10 +24,11 @@ export default function EditCard() {
       }
     }
     getDeck();
-    return () => abortController.abort()
+    return () => abortController.abort();
   }, [params.deckId, params.cardId]);
 
-  const handleEditCard = async (event) => {
+  // Handlers
+  const handleEditCardSubmit = async (event) => {
     event.preventDefault();
     await updateCard(editCardData);
     history.push(`/decks/${params.deckId}`);
@@ -37,12 +38,17 @@ export default function EditCard() {
     event.preventDefault();
     setEditCardData({
       ...editCardData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   };
 
-  const createCardForm = (
-    <form onSubmit={handleEditCard}>
+  const handleCancel = (event) => {
+    event.preventDefault();
+    history.push(`/decks/${params.deckId}`)
+  }
+
+  const editCardForm = (
+    <form onSubmit={handleEditCardSubmit}>
       <div className="mb-3">
         <label htmlFor="front" className="form-label">
           Front
@@ -73,9 +79,9 @@ export default function EditCard() {
           required
         />
       </div>
-      <Link to={`/decks/${currentDeck.id}`} className="btn btn-secondary">
+      <button onClick={handleCancel} className="btn btn-secondary">
         Cancel
-      </Link>
+      </button>
       <button
         type="submit"
         className="btn btn-primary"
@@ -90,7 +96,7 @@ export default function EditCard() {
     <>
       <Breadcrumb middleText={`Deck ${currentDeck.name}`} deckId={currentDeck.id} finalText={`Edit Card ${params.cardId}`} />
       <h3>{currentDeck.name}: Edit Card</h3>
-      {createCardForm}
+      {editCardForm}
     </>
   )
 }

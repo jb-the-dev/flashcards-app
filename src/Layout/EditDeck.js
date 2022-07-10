@@ -4,12 +4,12 @@ import { readDeck, updateDeck } from "../utils/api";
 import Breadcrumb from "./Breadcrumb";
 
 export default function EditDeck() {
-  const [editDeckFormData, setEditDeckFormData] = useState({});
+  const [editDeckFormData, setEditDeckFormData] = useState({name: "", description: ""});
 
   const { params } = useRouteMatch();
   const history = useHistory();
 
-  // API call to fetch deck
+  // API call to fetch current deck
   useEffect(() => {
     const abortController = new AbortController();
     async function getDeck() {
@@ -36,7 +36,7 @@ export default function EditDeck() {
     event.preventDefault();
     setEditDeckFormData({
       ...editDeckFormData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   };
 
@@ -78,7 +78,7 @@ export default function EditDeck() {
           required
         />
       </div>
-      <button onClick={handleEditCancel} type="button" className="btn btn-secondary">
+      <button onClick={handleEditCancel} className="btn btn-secondary">
         Cancel
       </button>
       <button
@@ -92,10 +92,10 @@ export default function EditDeck() {
   );
 
   return (
-    <React.Fragment>
+    <>
       <Breadcrumb middleText={editDeckFormData.name} deckId={params.deckId} finalText={"Edit Deck"}/>
       <h1>Edit Deck</h1>
-      <div>{editDeckForm}</div>
-    </React.Fragment>
+      {editDeckForm}
+    </>
   );
 }
