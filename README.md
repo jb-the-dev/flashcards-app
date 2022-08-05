@@ -1,5 +1,6 @@
 # flashcards-app
 
+## Description
 A study aide that allows users to customize study decks and study cards
 
 This project represents the first full front-end React application developed by JB. 
@@ -12,7 +13,7 @@ There is also a backup of the starting database contained in the `src` folder; t
 
 The styling is primarily Bootstrap, with bits of flexbox interspersed.
 
-## Note
+## Instructions
 This app only works on local machines currently, due to the nature of the simulated "dummy" backend & database. To run this app:
 1. Fork and clone this repository.
 2. Run `npm install`
